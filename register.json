@@ -1,0 +1,16 @@
+{
+    "version": "1.0.0",
+    "apikeys": {
+        "c9069bbd-8446-48b0-b58c-0af98bc1cf4b": "",
+        "5420d5ba-803a-4e5c-95e6-286517d862a7": "",
+        "47cfb71a-6fb9-4e42-872b-a801179e06a0": "",
+        "8672dfca-1aed-49c9-9d01-1bea9091bd0f": ""
+    },
+    "videos": {
+        "ASC348d": "video-library/1607872732_looped_1607872731.mp4",
+        "ASC391d": "video-library/1608497037_looped_1608497036.mp4",
+        "ASC274d": "video-library/1608505192_looped_1608505191.mp4",
+        "ASC243d": "video-library/1608621450_looped_1608621449.mp4"
+    }
+    
+}

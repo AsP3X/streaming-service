@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Http video streaming</title>
+    <style>
+        body {
+            margin: 40px auto;
+            max-width: 650;
+            background-color: #444;
+        }
+        .list_video {
+            color: black;
+            background-color: white;
+            border-radius: 25px;
+            width: fit-content;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+    <video id="videoPlayer" width="650" controls muted="muted" autoplay></video>
+    <div id="VideoList">
+
+    </div>
+    <script>
+
+        function parse_query_string(query) {
+        var vars = query.split("&");
+        var query_string = {};
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            var key = decodeURIComponent(pair[0]);
+            var value = decodeURIComponent(pair[1]);
+            // If first entry with this name
+            if (typeof query_string[key] === "undefined") {
+            query_string[key] = decodeURIComponent(value);
+            // If second entry with this name
+            } else if (typeof query_string[key] === "string") {
+            var arr = [query_string[key], decodeURIComponent(value)];
+            query_string[key] = arr;
+            // If third or later entry with this name
+            } else {
+            query_string[key].push(decodeURIComponent(value));
+            }
+        }
+        return query_string;
+        }
+
+        function getVideos(url) {
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    displayVideoList(this.responseText);
+                }
+            };
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        }
+
+        function displayVideoList(responseJson) {
+            const rawJson = JSON.parse(responseJson);
+            const data = rawJson.videos;
+            for (i = 0; i < Object.keys(data).length; i++) {
+                var key = Object.keys(data)[i];
+                document.getElementById("VideoList").innerHTML += "<p class=\"list_video\">" + data[key]  + "</p>";
+            }
+            
+        }
+
+        function createVideoElement(videoId) {
+            var video = document.getElementById('videoPlayer');
+            var source = document.createElement('source');
+
+            source.setAttribute('src', '/video/' + videoId);
+
+            video.appendChild(source);
+            video.play();
+
+            // setTimeout(function() {  
+            //     video.pause();
+
+            //     source.setAttribute('src', '/video/xx'); 
+
+            //     video.load();
+            //     video.play();
+            // }, 30000);
+        }
+
+        var query = window.location.search.substring(1);
+        var qs = parse_query_string(query);
+
+        getVideos("/list");
+        createVideoElement(qs["videoid"]);
+    </script>
+</body>
+</html>

@@ -39,7 +39,7 @@ app.get("/video/:videoid", function (req, res) {
     const videoPath = videoSRC;
     const videoSize = fs.statSync(videoSRC).size;
 
-    const CHUNK_SIZE = 10 ** 6;
+    const CHUNK_SIZE = 4 ** 6;
     const start = Number(range.replace(/\D/g, ""));
     const end = Math.min(start + CHUNK_SIZE, videoSize -1);
 

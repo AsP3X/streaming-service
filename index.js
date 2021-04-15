@@ -7,6 +7,9 @@ app.get("/", function (req, res) {
 });
 
 app.get("/list", function (req, res) {
+    var videoItems = fs.readdirSync('./video-library', {withFileTypes: true})
+      .filter(item => !item.isDirectory())
+      .map(item => item.name);
     const rawdata = fs.readFileSync('register.json');
     res.send(rawdata);
 });
@@ -19,6 +22,7 @@ function resolveVideo(parameter) {
 
 app.get("/video/:videoid", function (req, res) {
     const range = req.headers.range;
+    const accessip = req.ip;
     const videoUrl = req.params.videoid;
     // console.log(videoUrl);
     const videoJson = resolveVideo(videoUrl);
@@ -47,12 +51,14 @@ app.get("/video/:videoid", function (req, res) {
         "Content-Type": "video/mp4",
     };
 
+    console.log("_" + accessip +"_ Blog requested: " + start);
+
     res.writeHead(206, headers);
 
     const videoStream = fs.createReadStream(videoPath, { start, end });
     videoStream.pipe(res);
 });
 
-app.listen(8000, function () {
+app.listen(3000, function () {
     console.log("Listening to port 8000");
 })

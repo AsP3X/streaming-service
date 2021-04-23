@@ -7,9 +7,6 @@ app.get("/", function (req, res) {
 });
 
 app.get("/list", function (req, res) {
-    var videoItems = fs.readdirSync('./video-library', {withFileTypes: true})
-      .filter(item => !item.isDirectory())
-      .map(item => item.name);
     const rawdata = fs.readFileSync('register.json');
     res.send(rawdata);
 });
@@ -39,7 +36,7 @@ app.get("/video/:videoid", function (req, res) {
     const videoPath = videoSRC;
     const videoSize = fs.statSync(videoSRC).size;
 
-    const CHUNK_SIZE = 4 ** 6;
+    const CHUNK_SIZE = 4 ** 11;
     const start = Number(range.replace(/\D/g, ""));
     const end = Math.min(start + CHUNK_SIZE, videoSize -1);
 

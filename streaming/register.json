@@ -7,7 +7,9 @@
         "8672dfca-1aed-49c9-9d01-1bea9091bd0f": ""
     },
     "videos": {
-        "ASC452d": "video-library/lucidchart_advertisement.mp4",
-	"ASC453d": "video-library/relax.mp4"
+        "ASC451d": "video-library/video1.mp4",
+        "ASC452d": "video-library/video2.mp4",
+        "ASC453d": "video-library/video3.mp4",
+        "ASC454d": "video-library/video4.mp4"
     }
 }
